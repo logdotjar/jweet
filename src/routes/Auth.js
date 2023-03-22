@@ -6,7 +6,9 @@ const Auth = () => {
     /*
     * onChange 함수 : 이메일,비밀번호 따로 만들지 않기 위한 것
     * 함수의 파라미터에서도 비구조화 할당을 할 수 있다.
-    *
+    * 값이 바뀔때마다 onChange 함수를 호출해서 사용한다.
+    * event parameter 는 input의 변경이 일어났는지 의미
+    * target의 value는 키보드로 입력된 값
     * */
     const onChange = (event) => {
         const {target : {name,value}} = event;
@@ -23,7 +25,7 @@ const Auth = () => {
         <div>
             <form onSubmit={onSubmit}>
                 <input
-                    type="text"
+                    type="email"
                     name="email"
                     placeholder="이메일"
                     value={email}
