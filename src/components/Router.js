@@ -8,8 +8,8 @@ import Auth from "../routes/Auth";
 import Home from "../routes/Home";
 
 // 인중 로그인 여부에 따라 달라짐
-const AppRouter = () => {
-    const [isLoggedIn,setIsLoggedIn] = useState(false);
+const AppRouter = ({ isLoggedIn }) => {
+
     return(
         <Router>
             <Switch>
