@@ -1,4 +1,5 @@
 import React, {useState} from "react";
+import { authService } from "fbase";
 
 const Auth = () => {
     const [email,setEmail] = useState("");
@@ -10,6 +11,7 @@ const Auth = () => {
     * event parameter 는 input의 변경이 일어났는지 의미
     * target의 value는 키보드로 입력된 값
     * */
+    const [newAccount, setNewAccount] = useState(true);
     const onChange = (event) => {
         const {target : {name,value}} = event;
         if(name === "email"){
@@ -18,8 +20,27 @@ const Auth = () => {
             setPassword(value)
         }
     }
-    const onSubmit = (event) => {
+    const onSubmit = async(event) => {
         event.preventDefault();
+        try{
+            let data;
+            // form 제출하면서 로그인 혹은 계정생성 버튼 보여주기
+            if(newAccount){
+                // 계정생성하기
+                 data = await authService.createUserWithEmailAndPassword(
+                    email, password
+                )
+            } else {
+                // 로그인하기
+                 data = await authService.signInWithEmailAndPassword(
+                    email, password
+                )
+            }
+            console.log(data);
+        } catch(error){
+            console.log(error);
+        }
+
     }
     return (
         <div>
@@ -40,7 +61,7 @@ const Auth = () => {
                     onChange={onChange}
                     required
                 />
-                <input type="submit" value="logIn"/>
+                <input type="submit" value={newAccount ? "계정 생성하기 " : "로그인"}/>
             </form>
 
             <div>
