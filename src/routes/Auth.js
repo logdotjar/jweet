@@ -1,5 +1,10 @@
-import React, {useState} from "react";
+import React, {useState, useEffect} from "react";
+import AppRouter from "components/Router";
 import { authService } from "fbase";
+import {
+    createUserWithEmailAndPassword,
+    signInWithEmailAndPassword,
+} from "firebase/auth";
 
 const Auth = () => {
     const [email,setEmail] = useState("");
@@ -12,6 +17,8 @@ const Auth = () => {
     * target의 value는 키보드로 입력된 값
     * */
     const [newAccount, setNewAccount] = useState(true);
+    const [error, setError] = useState("");
+
     const onChange = (event) => {
         const {target : {name,value}} = event;
         if(name === "email"){
@@ -19,7 +26,7 @@ const Auth = () => {
         } else if (name === "password"){
             setPassword(value)
         }
-    }
+    };
     const onSubmit = async(event) => {
         event.preventDefault();
         try{
@@ -27,21 +34,25 @@ const Auth = () => {
             // form 제출하면서 로그인 혹은 계정생성 버튼 보여주기
             if(newAccount){
                 // 계정생성하기
-                 data = await authService.createUserWithEmailAndPassword(
-                    email, password
+                 data = await createUserWithEmailAndPassword(
+                     authService,
+                     email, password
                 )
             } else {
                 // 로그인하기
-                 data = await authService.signInWithEmailAndPassword(
-                    email, password
+                 data = await signInWithEmailAndPassword(
+                     authService,
+                     email, password
                 )
             }
             console.log(data);
         } catch(error){
-            console.log(error);
+            setError(error.message);
         }
-
     }
+
+    const toggleAccount = () => setNewAccount((prev) => !prev);
+
     return (
         <div>
             <form onSubmit={onSubmit}>
@@ -61,9 +72,15 @@ const Auth = () => {
                     onChange={onChange}
                     required
                 />
-                <input type="submit" value={newAccount ? "계정 생성하기 " : "로그인"}/>
+                <input
+                    type="submit"
+                    value={newAccount ? "계정 생성하기 " : "로그인"}
+                />
+                {error}
             </form>
-
+            <span onClick={toggleAccount}>
+                {newAccount ? "가입하기" : "계정 생성하기"}
+            </span>
             <div>
                 <button>Continue with Google</button>
                 <button>Continue with Github</button>
