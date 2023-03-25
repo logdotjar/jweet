@@ -48,7 +48,6 @@ const Home = ({ userObj }) => {
                 id: document.id,
                 ...document.data(),
             }));
-            console.log(jweetArr);
             setJweets(jweetArr);
         });
     },[]);
