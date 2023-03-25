@@ -6,7 +6,6 @@ export default () => {
     const onLogOutClick = () => {
         authService.signOut();
         history.push("/")
-
     }
   return <>
     <button onClick={onLogOutClick}>Log Out</button>
