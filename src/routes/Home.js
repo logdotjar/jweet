@@ -7,6 +7,7 @@ import {
     orderBy ,
     onSnapshot
 } from "firebase/firestore";
+import Jweet from "components/Jweet";
 
 const Home = ({ userObj }) => {
     const [jweet,setJweet] = useState("");
@@ -88,13 +89,13 @@ const Home = ({ userObj }) => {
                 />
                 <input type="submit" value="Jweet :)"/>
             </form>
-            <div key={jweet.id}>
-
-
+            <div>
                 {jweets.map((jweet) => (
-                    <div>
-                        <h4>{jweet.text}</h4>
-                    </div>
+                    <Jweet
+                        key={jweet.id}
+                        jweetObj={jweet}
+                        isOwner={jweet.creatorId === userObj.uid}
+                    />
                 ))}
             </div>
         </div>
