@@ -1,12 +1,21 @@
 import React, {useEffect, useState} from "react";
 import { dbService } from "fbase";
-import { addDoc, collection , getDocs , query } from "firebase/firestore";
+import {
+    addDoc,
+    collection ,
+    getDocs ,
+    query ,
+    orderBy ,
+    onSnapshot
+} from "firebase/firestore";
 
 const Home = ({ userObj }) => {
     const [jweet,setJweet] = useState("");
     //입력한 Jweets를 뿌리기 위한 것
     const [jweets,setJweets] = useState([]);
 
+    /*
+    // 구식방법이라 주석처리
     const getJweets = async() => {
         //component가 mount - async사용위해서 함수로 작성
         const q = query(collection(dbService, "jweets"));
@@ -25,8 +34,23 @@ const Home = ({ userObj }) => {
        });
     }
 
+     */
+
     useEffect(()=>{
-        getJweets();
+        const q = query(
+            collection(dbService, "nweets"),
+            orderBy("createdAt", "desc")
+        );
+
+        onSnapshot(q, (snapshot) => {
+            // 배열 ojbect 반환, foreach보다는 이걸 사용 -> 재렌더하지 않기 때문에
+            const jweetArr = snapshot.docs.map((document) => ({
+                id: document.id,
+                ...document.data(),
+            }));
+            console.log(jweetArr);
+            setJweets(jweetArr);
+        });
     },[]);
 
     const onSubmit = async (event) => {
@@ -63,7 +87,7 @@ const Home = ({ userObj }) => {
             </form>
             <div key={jweet.id}>
                 {jweets.map(jweet => <div>
-                    <h4>{jweet.jweet}</h4>
+                    <h4>{jweet.text}</h4>
                 </div>)}
             </div>
         </div>
