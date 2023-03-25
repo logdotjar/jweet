@@ -3,7 +3,6 @@ import { dbService } from "fbase";
 import {
     addDoc,
     collection ,
-    getDocs ,
     query ,
     orderBy ,
     onSnapshot
@@ -38,7 +37,7 @@ const Home = ({ userObj }) => {
 
     useEffect(()=>{
         const q = query(
-            collection(dbService, "nweets"),
+            collection(dbService, "jweets"),
             orderBy("createdAt", "desc")
         );
 
@@ -59,17 +58,21 @@ const Home = ({ userObj }) => {
         // console.log(`제출하는 jweet:${jweet}`);
         try {
             const docRef = await addDoc(collection(dbService, "jweets"), {
-                text:jweet,
+                text: jweet,
                 createdAt: Date.now(),
                 creatorId: userObj.uid
             });
+            console.log(docRef);
         }catch (error) {
             console.error("Error adding document: ", error);
         }
         setJweet("");
     }
-    const onChange = (e) => {
-        setJweet(e.target.value);
+    const onChange = (event) => {
+        const {
+            target: { value },
+        } = event;
+        setJweet(value);
     };
 
 
@@ -86,9 +89,13 @@ const Home = ({ userObj }) => {
                 <input type="submit" value="Jweet :)"/>
             </form>
             <div key={jweet.id}>
-                {jweets.map(jweet => <div>
-                    <h4>{jweet.text}</h4>
-                </div>)}
+
+
+                {jweets.map((jweet) => (
+                    <div>
+                        <h4>{jweet.text}</h4>
+                    </div>
+                ))}
             </div>
         </div>
     )

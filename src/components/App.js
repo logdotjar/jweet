@@ -19,7 +19,6 @@ function App() {
       if (user) {
         setIsLoggedIn(true);
         setUserObj(user);
-        const uid = user.uid;
       } else {
         setIsLoggedIn(false);
       }
@@ -28,7 +27,7 @@ function App() {
   }, []);
   return (
       <>
-        {init ? <AppRouter isLoggedIn={isLoggedIn} userObje={userObj}/> : "초기화..."}
+        {init ? <AppRouter isLoggedIn={isLoggedIn} userObj={userObj}/> : "초기화..."}
         <footer>&copy; {new Date().getFullYear()} Jwitter :)</footer>
       </>
   );
