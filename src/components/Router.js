@@ -11,7 +11,7 @@ import Profile from "routes/Profile";
 import Navigation from "components/Navigation";
 
 // 인중 로그인 여부에 따라 달라짐
-const AppRouter = ({ isLoggedIn }) => {
+const AppRouter = ({ isLoggedIn , userObj }) => {
 
     return(
         <Router>
@@ -20,7 +20,7 @@ const AppRouter = ({ isLoggedIn }) => {
                 {isLoggedIn ?(
                     <>
                         <Route exact path = "/">
-                            <Home/>
+                            <Home userObj={userObj}/>
                         </Route>
                         <Route exact path = "/profile">
                             <Profile/>

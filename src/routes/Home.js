@@ -2,7 +2,7 @@ import React, {useEffect, useState} from "react";
 import { dbService } from "fbase";
 import { addDoc, collection , getDocs , query } from "firebase/firestore";
 
-const Home = () => {
+const Home = ({ userObj }) => {
     const [jweet,setJweet] = useState("");
     //입력한 Jweets를 뿌리기 위한 것
     const [jweets,setJweets] = useState([]);
@@ -35,8 +35,9 @@ const Home = () => {
         // console.log(`제출하는 jweet:${jweet}`);
         try {
             const docRef = await addDoc(collection(dbService, "jweets"), {
-                jweet,
+                text:jweet,
                 createdAt: Date.now(),
+                creatorId: userObj.uid
             });
         }catch (error) {
             console.error("Error adding document: ", error);
