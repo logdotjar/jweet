@@ -1,6 +1,14 @@
 import React, {useState} from "react";
-import { dbService } from "fbase";
-import { doc, deleteDoc, updateDoc }from"firebase/firestore";
+import {
+    dbService,
+    storageService
+} from "fbase";
+import { doc, deleteDoc, updateDoc }from "firebase/firestore";
+import {
+    deleteObject,
+    ref
+} from "firebase/storage";
+
 
 const Jweet = ({ jweetObj, isOwner }) => {
     // 내가 작성자일 경우 버튼이 보일 수 있게 함
@@ -9,11 +17,27 @@ const Jweet = ({ jweetObj, isOwner }) => {
     const [editing,setEditing] = useState(false);
     //수정 input에 입력된 text 업데이트
     const [newJweet , setNewJweet] = useState(jweetObj.text);
-    const onDeleteJweet = doc(dbService , "jweets", `${jweetObj.id}`)
+    const onDeleteJweet = doc(dbService , "jweets", `${jweetObj.id}`);
+
+    // 삭제하려는 이미지 파일 가리키는 ref 생성하기
+    // jweetObj의 attachmentUrl이 바로 삭제하려는 URL임
+    const desertRef = ref(storageService, jweetObj.attachmentUrl);
+
     const onDeleteClick = async() => {
         const ok = window.confirm("정말 삭제하시겠습니까?");
         if(ok){
-            await deleteDoc(onDeleteJweet);
+            try{
+                await deleteDoc(onDeleteJweet);
+
+                if(jweetObj.attachmentUrl !== ""){
+                    await deleteObject(desertRef);
+                }
+
+
+            } catch (error){
+                window.alert("삭제를 실패했습니다.")
+            }
+
         }
     }
 
@@ -55,6 +79,7 @@ const Jweet = ({ jweetObj, isOwner }) => {
                     (
                         <>
                             <h4>{jweetObj.text}</h4>
+                            { jweetObj.attachmentUrl && <img src={jweetObj.attachmentUrl} width="50px"/> }
                             {isOwner &&
                                 <>
                                     <button onClick={onDeleteClick}>삭제하기</button>
