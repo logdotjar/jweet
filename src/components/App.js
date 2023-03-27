@@ -29,7 +29,8 @@ function App() {
           user.displayName = userName;
         }
       } else {
-        setIsLoggedIn(false);
+        setUserObj(null);
+        // setIsLoggedIn(false);
       }
       setInit(true);
     });
