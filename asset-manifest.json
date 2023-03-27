@@ -1,8 +1,8 @@
 {
   "files": {
-    "main.js": "/nmd-twt/static/js/main.933e95c9.js",
-    "index.html": "/nmd-twt/index.html",
-    "main.933e95c9.js.map": "/nmd-twt/static/js/main.933e95c9.js.map"
+    "main.js": "/jweet/static/js/main.933e95c9.js",
+    "index.html": "/jweet/index.html",
+    "main.933e95c9.js.map": "/jweet/static/js/main.933e95c9.js.map"
   },
   "entrypoints": [
     "static/js/main.933e95c9.js"
