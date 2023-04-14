@@ -8,6 +8,8 @@ import {
     deleteObject,
     ref
 } from "firebase/storage";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTrash, faPencilAlt } from "@fortawesome/free-solid-svg-icons";
 
 
 const Jweet = ({ jweetObj, isOwner }) => {
@@ -62,7 +64,7 @@ const Jweet = ({ jweetObj, isOwner }) => {
                 editing ?
                     (
                         <>
-                            <form onSubmit={onSubmit}>
+                            <form onSubmit={onSubmit} className="container nweetEdit">
                                 <input
                                     type="text"
                                     value={newJweet}
@@ -71,8 +73,8 @@ const Jweet = ({ jweetObj, isOwner }) => {
                                     required
                                 />
                             </form>
-                            <input type="submit" value="Jweet 업데이트하기"/>
-                            <button onClick={toggleEditing}>취소</button>
+                            <input type="submit" value="Jweet 업데이트하기" className="formBtn"/>
+                            <button onClick={toggleEditing} className="formBtn cancelBtn">취소</button>
                         </>
                     )
                     :
@@ -81,10 +83,14 @@ const Jweet = ({ jweetObj, isOwner }) => {
                             <h4>{jweetObj.text}</h4>
                             { jweetObj.attachmentUrl && <img src={jweetObj.attachmentUrl} width="50px"/> }
                             {isOwner &&
-                                <>
-                                    <button onClick={onDeleteClick}>삭제하기</button>
-                                    <button onClick={toggleEditing}>수정하기</button>
-                                </>
+                                <div className="nweet__actions">
+                                       <span onClick={onDeleteClick}>
+                                            <FontAwesomeIcon icon={faTrash} />
+                                      </span>
+                                    <span onClick={toggleEditing}>
+                                        <FontAwesomeIcon icon={faPencilAlt} />
+                                    </span>
+                                </div>
                             }
                         </>
                     )

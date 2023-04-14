@@ -54,9 +54,9 @@ const Home = ({ userObj }) => {
 
 
     return (
-        <div>
+        <div className="container">
             <JweetFactory userObj={userObj}/>
-            <div>
+            <div style={{ marginTop: 30 }}>
                 {jweets.map((jweet) => (
                     <Jweet
                         key={jweet.id}

@@ -67,17 +67,28 @@ export default ({ refreshUser , userObj }) => {
 
 
   return (
-      <>
-          <form onSubmit={onSubmit}>
+      <div className="container">
+          <form onSubmit={onSubmit} className="profileForm">
               <input
                   type="text"
                   placeholder="유저 이름"
                   value={newDisplayName}
                   onChange={onChange}
+                  autoFocus
+                  className="profileForm"
               />
-              <input type="submit" value="프로필 수정하기"/>
+              <input
+                  type="submit"
+                  value="프로필 수정하기"
+                  className="formBtn"
+                  style={{
+                      marginTop: 10,
+                  }}
+              />
           </form>
-          <button onClick={onLogOutClick}>Log Out</button>
-      </>
+          <span className="formBtn cancelBtn logOut" onClick={onLogOutClick}>
+            Log Out
+          </span>
+      </div>
   )
 };

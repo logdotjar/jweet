@@ -2,6 +2,7 @@ import React, {useState} from "react";
 import {createUserWithEmailAndPassword, signInWithEmailAndPassword} from "firebase/auth";
 import {authService} from "../fbase";
 
+
 const AuthForm = () => {
     const [email,setEmail] = useState("");
     const [password,setPassword] = useState("");
@@ -51,7 +52,7 @@ const AuthForm = () => {
 
     return(
         <>
-            <form onSubmit={onSubmit}>
+            <form onSubmit={onSubmit} className="container">
                 <input
                     type="email"
                     name="email"
@@ -59,6 +60,7 @@ const AuthForm = () => {
                     value={email}
                     onChange={onChange}
                     required
+                    className="authInput"
                 />
                 <input
                     type="password"
@@ -67,14 +69,16 @@ const AuthForm = () => {
                     value={password}
                     onChange={onChange}
                     required
+                    className="authInput"
                 />
                 <input
                     type="submit"
                     value={newAccount ? "계정 생성하기 " : "로그인"}
+                    className="authInput authSubmit"
                 />
-                {error}
+                {error && <span className="authError">{error}</span>}
             </form>
-            <span onClick={toggleAccount}>
+            <span onClick={toggleAccount} className="authSwitch">
                 {newAccount ? "가입하기" : "계정 생성하기"}
             </span>
         </>
