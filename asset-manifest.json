@@ -1,10 +1,13 @@
 {
   "files": {
-    "main.js": "/jweet/static/js/main.933e95c9.js",
+    "main.css": "/jweet/static/css/main.ff37f1a6.css",
+    "main.js": "/jweet/static/js/main.112b17be.js",
     "index.html": "/jweet/index.html",
-    "main.933e95c9.js.map": "/jweet/static/js/main.933e95c9.js.map"
+    "main.ff37f1a6.css.map": "/jweet/static/css/main.ff37f1a6.css.map",
+    "main.112b17be.js.map": "/jweet/static/js/main.112b17be.js.map"
   },
   "entrypoints": [
-    "static/js/main.933e95c9.js"
+    "static/css/main.ff37f1a6.css",
+    "static/js/main.112b17be.js"
   ]
 }
